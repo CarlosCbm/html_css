@@ -1,0 +1,26 @@
+h1{
+    color: red;
+    text-align: center;
+}
+
+h2{
+    color: aqua;
+    text-align: left;
+}
+.justificado{
+color: blue;
+text-align: justify;
+
+}
+
+
+.direita{
+text-align: right;
+font-size: 40px;
+
+}
+
+    
+body{
+    background-color: gray;
+}

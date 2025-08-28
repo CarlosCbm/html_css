@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SneakerStore — Tênis Importados</title>
+  <meta name="description" content="Loja fictícia de tênis importados — HTML, CSS e JS em um único arquivo." />
+  <style>
+    :root{
+      --bg:#f5f7fa;       /* fundo claro */
+      --panel:#ffffff;    /* cartões/painéis */
+      --soft:#e0e3eb;     /* bordas/linhas */
+      --txt:#1d1f2b;      /* texto principal */
+      --muted:#6b7280;    /* texto secundário */
+      --brand:#3b82f6;    /* azul */
+      --accent:#10b981;   /* verde */
+      --danger:#ef4444;   /* vermelho */
+      --ok:#22c55e;       /* verde sucesso */
+      --shadow: 0 4px 12px rgba(0,0,0,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color:var(--txt);
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1200px; margin:0 auto; padding:0 20px}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:50; backdrop-filter: blur(6px); background:rgba(255,255,255,.8); box-shadow: var(--shadow);}
+    .nav{
+      display:flex; align-items:center; gap:16px; justify-content:space-between;
+      padding:16px 0;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.5px}
+    .brand .logo{width:34px; height:34px; border-radius:10px; display:grid; place-items:center; color:white;
+      background: linear-gradient(135deg, var(--brand), var(--accent)); box-shadow: var(--shadow)}
+    .actions{display:flex; align-items:center; gap:10px}
+    .btn{border:none; border-radius:12px; padding:10px 14px; background:var(--panel); color:var(--txt); cursor:pointer;
+      transition: transform .06s ease, background .2s ease; box-shadow: var(--shadow)}
+    .btn:hover{transform: translateY(-1px); background:#f3f4f6}
+    .btn.primary{background: linear-gradient(135deg, var(--brand), #60a5fa); color:white; font-weight:600}
+
+    /* Hero */
+    .hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:24px; align-items:center; padding: 30px 0 10px}
+    .hero-card{background:#ffffff; border:1px solid var(--soft);
+      border-radius:var(--radius); padding:28px; box-shadow:var(--shadow)}
+    .hero h1{margin:0 0 8px; font-size: clamp(28px, 3.5vw, 42px)}
+    .hero p{margin:0 0 16px; color:var(--muted)}
+    .hero .badges{display:flex; gap:8px; flex-wrap:wrap}
+    .badge{background:#f3f4f6; border:1px solid var(--soft); padding:6px 10px; border-radius:999px; font-size:12px; color:var(--muted)}
+
+    /* Toolbar */
+    .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin:18px 0}
+    .search{flex:1; min-width:220px; display:flex; align-items:center; gap:8px; background:var(--panel); border:1px solid var(--soft);
+      border-radius:12px; padding:10px 12px; box-shadow: var(--shadow)}
+    .search input{flex:1; background:transparent; border:none; outline:none; color:var(--txt)}
+    .filters{display:flex; gap:8px; flex-wrap:wrap}
+    .chip{padding:8px 12px; border-radius:999px; background:#f3f4f6; border:1px solid var(--soft); cursor:pointer; font-size:14px; color:var(--muted)}
+    .chip.active{background:linear-gradient(135deg, var(--brand), var(--accent)); color:white; border-color:transparent}
+    .sort{background:var(--panel); border:1px solid var(--soft); border-radius:12px; padding:10px; color:var(--txt); box-shadow: var(--shadow)}
+
+    /* Grid */
+    .grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:18px}
+    @media (max-width:1000px){ .hero{grid-template-columns: 1fr} .grid{grid-template-columns: repeat(3, 1fr);} }
+    @media (max-width:720px){ .grid{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width:480px){ .grid{grid-template-columns: 1fr;} }
+
+    .card{background:var(--panel); border:1px solid var(--soft); border-radius:16px; overflow:hidden; position:relative; display:flex; flex-direction:column; box-shadow: var(--shadow)}
+    .thumb{height:180px; background:#f3f4f6; position:relative; display:flex; align-items:center; justify-content:center}
+    .thumb img{max-height:100%; max-width:100%; object-fit:contain}
+    .thumb .label{position:absolute; top:10px; left:10px; font-size:12px; background:var(--brand); color:white; padding:6px 8px; border-radius:8px}
+    .content{padding:14px}
+    .title{font-weight:700; margin:0 0 6px}
+    .meta{display:flex; gap:8px; align-items:center; color:var(--muted); font-size:12px}
+    .price{display:flex; align-items:center; justify-content:space-between; padding:12px 14px 16px; gap:10px}
+    .price strong{font-size:18px}
+    .strike{color:#9ca3af; text-decoration:line-through; margin-left:6px; font-weight:400}
+
+    .add{margin:0 14px 14px; display:flex; gap:10px}
+    .qty{display:flex; align-items:center; background:#f3f4f6; border:1px solid var(--soft); border-radius:10px}
+    .qty button{all:unset; padding:8px 12px; cursor:pointer}
+    .qty input{all:unset; width:32px; text-align:center}
+    .add .btn{flex:1}
+
+    /* Footer */
+    footer{margin:30px 0 60px; color:var(--muted); text-align:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">
+        <span class="logo">👟</span>
+        <span>SneakerStore</span>
+      </a>
+      <div class="actions">
+        <button class="btn primary" id="btn-cart" title="Carrinho">🛒 <span id="cart-count">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Promoções da Semana</h1>
+        <p>Tênis importados exclusivos com até <strong>40% OFF</strong>. Pague no cartão, PIX ou boleto.</p>
+        <div class="badges">
+          <span class="badge">💳 10x sem juros</span>
+          <span class="badge">🚚 Frete grátis acima de R$ 500</span>
+          <span class="badge">🔒 Compra segura</span>
+        </div>
+      </div>
+      <div class="hero-card" style="display:grid; place-items:center; min-height:160px">
+        <div style="text-align:center">
+          <div style="font-size:22px; font-weight:700; margin-bottom:6px">Cupom de Boas-Vindas</div>
+          <div style="font-size:16px; color:var(--muted); margin-bottom:12px">USE O CÓDIGO <b>SNEAKER10</b></div>
+          <button class="btn primary">Copiar CUPOM</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolbar -->
+    <section class="toolbar">
+      <div class="search">
+        <span>🔎</span>
+        <input id="search" placeholder="Buscar tênis (ex.: Nike, Adidas, Puma)" />
+      </div>
+      <div class="filters">
+        <button class="chip active">Todos</button>
+        <button class="chip">Nike</button>
+        <button class="chip">Adidas</button>
+        <button class="chip">Puma</button>
+        <button class="chip">New Balance</button>
+      </div>
+      <select id="sort" class="sort">
+        <option value="featured">Ordenar: Destaques</option>
+        <option value="price-asc">Preço: menor → maior</option>
+        <option value="price-desc">Preço: maior → menor</option>
+      </select>
+    </section>
+
+    <!-- Grid de Produtos -->
+    <section class="grid">
+      <article class="card">
+        <div class="thumb">
+          <img src="https://static.nike.com/a/images/t_prod/w_960,c_limit,f_auto/23f2d69c-87f7-4b3f-8f54-1a0b5bfa2d5d/air-force-1-07-tenis.png" alt="Nike Air Force 1">
+          <span class="label">Novo</span>
+        </div>
+        <div class="content">
+          <h3 class="title">Nike Air Force 1</h3>
+          <div class="meta">Masculino • Importado</div>
+        </div>
+        <div class="price">
+          <div>
+            <strong>R$ 799,99</strong>
+          </div>
+        </div>
+        <div class="add">
+          <div class="qty">
+            <button>−</button>
+            <input type="text" value="1"/>
+            <button>+</button>
+          </div>
+          <button class="btn primary">Comprar</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb">
+          <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/2b2df45e9d3044c8a5b8aef800ddc6fc_9366/Tenis_Ultraboost_1.0_Branco_HP9842_01_standard.jpg" alt="Adidas Ultraboost">
+        </div>
+        <div class="content">
+          <h3 class="title">Adidas Ultraboost</h3>
+          <div class="meta">Corrida • Importado</div>
+        </div>
+        <div class="price">
+          <div>
+            <strong>R$ 999,99</strong>
+            <span class="strike">R$ 1199,99</span>
+          </div>
+        </div>
+        <div class="add">
+          <div class="qty">
+            <button>−</button>
+            <input type="text" value="1"/>
+            <button>+</button>
+          </div>
+          <button class="btn primary">Comprar</button>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <footer class="container">
+    © <span id="year"></span> SneakerStore — Todos os direitos reservados
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GameStore — Loja de Jogos</title>
+  <meta name="description" content="Loja fictícia de jogos — HTML, CSS e JS em um único arquivo." />
+  <style>
+    :root{
+      --bg:#0f1226;       /* fundo escuro azulado */
+      --panel:#171a33;    /* cartões/painéis */
+      --soft:#23264d;     /* bordas/linhas */
+      --txt:#e6e7ef;      /* texto principal */
+      --muted:#a5a7c7;    /* texto secundário */
+      --brand:#7c5cff;    /* roxo */
+      --accent:#19d3da;   /* ciano */
+      --danger:#ff5c7a;   /* rosa avermelhado */
+      --ok:#20c997;       /* verde */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,92,255,.25), transparent),
+                  radial-gradient(900px 450px at 110% 10%, rgba(25,211,218,.18), transparent),
+                  var(--bg);
+      color:var(--txt);
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1200px; margin:0 auto; padding:0 20px}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:50; backdrop-filter: blur(8px);}
+    .nav{
+      display:flex; align-items:center; gap:16px; justify-content:space-between;
+      padding:16px 0;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.5px}
+    .brand .logo{width:34px; height:34px; border-radius:12px; display:grid; place-items:center; color:white;
+      background: linear-gradient(135deg, var(--brand), var(--accent)); box-shadow: var(--shadow)}
+    .actions{display:flex; align-items:center; gap:10px}
+    .btn{border:none; border-radius:14px; padding:10px 14px; background:var(--panel); color:var(--txt); cursor:pointer;
+      transition: transform .06s ease, background .2s ease, opacity .2s ease; box-shadow: var(--shadow)}
+    .btn:hover{transform: translateY(-1px)}
+    .btn.primary{background: linear-gradient(135deg, var(--brand), #9f86ff)}
+    .btn.ghost{background:transparent; border:1px solid var(--soft)}
+
+    /* Hero */
+    .hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:24px; align-items:center; padding: 22px 0 10px}
+    .hero-card{background:linear-gradient(135deg, rgba(124,92,255,.25), rgba(25,211,218,.18)); border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius); padding:28px; box-shadow:var(--shadow)}
+    .hero h1{margin:0 0 8px; font-size: clamp(28px, 3.5vw, 44px)}
+    .hero p{margin:0 0 16px; color:var(--muted)}
+    .hero .badges{display:flex; gap:8px; flex-wrap:wrap}
+    .badge{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); padding:6px 10px; border-radius:999px; font-size:12px; color:#d8d9ef}
+
+    /* Toolbar */
+    .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin:18px 0}
+    .search{flex:1; min-width:220px; display:flex; align-items:center; gap:8px; background:var(--panel); border:1px solid var(--soft);
+      border-radius:14px; padding:10px 12px}
+    .search input{flex:1; background:transparent; border:none; outline:none; color:var(--txt)}
+    .filters{display:flex; gap:8px; flex-wrap:wrap}
+    .chip{padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid var(--soft); cursor:pointer; font-size:14px}
+    .chip.active{background:linear-gradient(135deg, rgba(124,92,255,.35), rgba(25,211,218,.25)); border-color:transparent}
+    .sort{background:var(--panel); border:1px solid var(--soft); border-radius:12px; padding:10px; color:var(--txt)}
+
+    /* Grid */
+    .grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:18px}
+    @media (max-width:1000px){ .hero{grid-template-columns: 1fr} .grid{grid-template-columns: repeat(3, 1fr);} }
+    @media (max-width:720px){ .grid{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width:480px){ .grid{grid-template-columns: 1fr;} }
+
+    .card{background:var(--panel); border:1px solid var(--soft); border-radius:18px; overflow:hidden; position:relative; display:flex; flex-direction:column; box-shadow: var(--shadow)}
+    .thumb{height:160px; background: linear-gradient(135deg, #2a2e57, #3a3f7a); position:relative}
+    .thumb .label{position:absolute; top:10px; left:10px; font-size:12px; background:linear-gradient(135deg, #ff8f70, #ff3d81); padding:6px 8px; border-radius:8px}
+    .content{padding:14px}
+    .title{font-weight:700; margin:0 0 6px}
+    .meta{display:flex; gap:8px; align-items:center; color:var(--muted); font-size:12px}
+    .price{display:flex; align-items:center; justify-content:space-between; padding:12px 14px 16px; gap:10px}
+    .price strong{font-size:18px}
+    .strike{color:#b9bade; text-decoration:line-through; margin-left:6px; font-weight:400}
+
+    .add{margin:0 14px 14px; display:flex; gap:10px}
+    .qty{display:flex; align-items:center; background:rgba(255,255,255,.04); border:1px solid var(--soft); border-radius:10px}
+    .qty button{all:unset; padding:8px 12px; cursor:pointer}
+    .qty input{all:unset; width:32px; text-align:center}
+    .add .btn{flex:1}
+
+    /* Cart (drawer) */
+    .cart{position:fixed; inset:0 0 0 auto; width:380px; background:var(--panel); border-left:1px solid var(--soft); transform: translateX(100%);
+      transition: transform .25s ease; z-index:60; display:flex; flex-direction:column}
+    .cart.open{transform: translateX(0)}
+    .cart header{position:unset; padding:16px; border-bottom:1px solid var(--soft)}
+    .cart h3{margin:0}
+    .cart .items{flex:1; overflow:auto; padding:10px}
+    .cart .item{display:grid; grid-template-columns: 56px 1fr auto; gap:10px; align-items:center; background:rgba(255,255,255,.03);
+      border:1px solid var(--soft); padding:8px; border-radius:12px; margin-bottom:10px}
+    .cart .thumb{height:56px}
+    .cart .name{font-size:14px; margin:0}
+    .cart .muted{color:var(--muted); font-size:12px}
+    .cart .remove{background:transparent; border:none; color:#ff8aa0; cursor:pointer}
+    .cart .footer{border-top:1px solid var(--soft); padding:14px; display:grid; gap:10px}
+
+    /* Toast */
+    .toast{position:fixed; right:16px; bottom:16px; background:rgba(30,34,70,.9); border:1px solid var(--soft); padding:10px 12px; border-radius:12px;
+      opacity:0; transform: translateY(10px); transition: all .25s ease; z-index:70}
+    .toast.show{opacity:1; transform: translateY(0)}
+
+    /* Footer */
+    footer{margin:30px 0 60px; color:var(--muted); text-align:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">
+        <span class="logo">🎮</span>
+        <span>GameStore</span>
+      </a>
+      <div class="actions">
+        <button class="btn ghost" id="btn-theme" title="Alternar tema">🌓</button>
+        <button class="btn" id="btn-cart" title="Carrinho">🛒 <span id="cart-count" style="margin-left:6px">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Promoções épicas da semana</h1>
+        <p>Jogos para PC, PlayStation, Xbox e Nintendo com até <strong>70% OFF</strong>. Pague com cartão, PIX ou boleto.</p>
+        <div class="badges">
+          <span class="badge">💳 10x sem juros</span>
+          <span class="badge">⚡ Entrega digital imediata</span>
+          <span class="badge">🔒 Compra segura</span>
+        </div>
+      </div>
+      <div class="hero-card" style="display:grid; place-items:center; min-height:160px">
+        <div style="text-align:center">
+          <div style="font-size:22px; font-weight:700; margin-bottom:6px">Cupom de Boas‑Vindas</div>
+          <div style="font-size:16px; color:var(--muted); margin-bottom:12px">USE O CÓDIGO <b>GAMER10</b> na primeira compra</div>
+          <button class="btn primary" onclick="copyCoupon()">Copiar CUPOM</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolbar -->
+    <section class="toolbar">
+      <div class="search">
+        <span>🔎</span>
+        <input id="search" placeholder="Buscar jogos (ex.: racing, RPG, Zelda, FIFA)" />
+      </div>
+      <div class="filters">
+        <button class="chip active" data-filter="all">Todos</button>
+        <button class="chip" data-filter="pc">PC</button>
+        <button class="chip" data-filter="playstation">PlayStation</button>
+        <button class="chip" data-filter="xbox">Xbox</button>
+        <button class="chip" data-filter="nintendo">Nintendo</button>
+        <button class="chip" data-filter="indie">Indie</button>
+      </div>
+      <select id="sort" class="sort">
+        <option value="featured">Ordenar: Destaques</option>
+        <option value="price-asc">Preço: menor → maior</option>
+        <option value="price-desc">Preço: maior → menor</option>
+        <option value="rating-desc">Avaliação</option>
+      </select>
+    </section>
+
+    <!-- Grid de Produtos -->
+    <section id="grid" class="grid"></section>
+  </main>
+
+  <!-- Carrinho (Drawer) -->
+  <aside id="cart" class="cart" aria-hidden="true">
+    <header class="nav" style="padding:14px 16px">
+      <h3>Carrinho</h3>
+      <button class="btn ghost" id="close-cart">Fechar ✖</button>
+    </header>
+    <div class="items" id="cart-items"></div>
+    <div class="footer">
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <span>Total</span>
+        <strong id="cart-total">R$ 0,00</strong>
+      </div>
+      <button class="btn primary" onclick="checkout()">Finalizar compra</button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast">Adicionado ao carrinho</div>
+
+  <footer class="container">
+    © <span id="year"></span> GameStore — Projeto de demonstração (HTML + CSS + JS)
+  </footer>
+
+  <script>
+    /* ===== Dados de exemplo ===== */
+    const GAMES = [
+      {id:1, name:"Elden Ring", platform:["pc","playstation","xbox"], category:"rpg", price:229.9, sale:169.9, rating:4.9, tag:"Destaque", cover:"gradient:violet"},
+      {id:2, name:"Hades II (Acesso Antecipado)", platform:["pc"], category:"indie", price:99.9, sale:null, rating:4.8, tag:"Indie", cover:"gradient:teal"},
+      {id:3, name:"Forza Horizon 5", platform:["pc","xbox"], category:"racing", price:249.9, sale:149.9, rating:4.7, tag:"Oferta", cover:"gradient:blue"},
+      {id:4, name:"The Legend of Zelda: TOTK", platform:["nintendo"], category:"adventure", price:349.9, sale:null, rating:4.9, tag:"Switch", cover:"gradient:green"},
+      {id:5, name:"God of War Ragnarök", platform:["playstation"], category:"action", price:299.9, sale:219.9, rating:4.9, tag:"PS", cover:"gradient:pink"},
+      {id:6, name:"Stardew Valley", platform:["pc","playstation","xbox","nintendo"], category:"indie", price:37.99, sale:null, rating:4.8, tag:"Fofo", cover:"gradient:orange"},
+      {id:7, name:"FIFA 24 (EA FC)", platform:["pc","playstation","xbox"], category:"sports", price:279.9, sale:179.9, rating:4.2, tag:"Futebol", cover:"gradient:amber"},
+      {id:8, name:"Hollow Knight", platform:["pc","playstation","xbox","nintendo"], category:"indie", price:36.99, sale:29.99, rating:4.9, tag:"Indie", cover:"gradient:slate"},
+      {id:9, name:"Minecraft", platform:["pc","playstation","xbox","nintendo"], category:"sandbox", price:129.9, sale:null, rating:4.7, tag:"Criativo", cover:"gradient:lime"},
+      {id:10, name:"Cyberpunk 2077", platform:["pc","playstation","xbox"], category:"rpg", price:199.9, sale:99.9, rating:4.3, tag:"Promo", cover:"gradient:yellow"},
+      {id:11, name:"Mario Kart 8 Deluxe", platform:["nintendo"], category:"racing", price:299.9, sale:229.9, rating:4.8, tag:"Switch", cover:"gradient:red"},
+      {id:12, name:"Baldur's Gate 3", platform:["pc","playstation","xbox"], category:"rpg", price:299.9, sale:null, rating:4.9, tag:"RPG", cover:"gradient:purple"}
+    ];
+
+    /* ===== Utilidades ===== */
+    const $ = (q, el=document) => el.querySelector(q);
+    const $$ = (q, el=document) => [...el.querySelectorAll(q)];
+    const money = n => n.toLocaleString('pt-BR',{style:'currency', currency:'BRL'});
+    const save = (k,v)=> localStorage.setItem(k, JSON.stringify(v));
+    const load = (k,d)=> JSON.parse(localStorage.getItem(k)||JSON.stringify(d));
+
+    /* ===== Estado ===== */
+    let cart = load('cart', []);
+    let filterPlatform = 'all';
+    let searchText = '';
+    let sortMode = 'featured';
+
+    /* ===== UI Dinâmica ===== */
+    const grid = $('#grid');
+    const cartEl = $('#cart');
+    const cartItemsEl = $('#cart-items');
+    const cartCountEl = $('#cart-count');
+    const cartTotalEl = $('#cart-total');
+
+    function platformChips(p){
+      const map = {pc:'PC', playstation:'PS', xbox:'Xbox', nintendo:'Switch'};
+      return p.map(k=>`<span class="badge">${map[k]||k}</span>`).join('');
+    }
+    function ratingStars(n){
+      const full = '★'.repeat(Math.floor(n));
+      const empty = '☆'.repeat(5-Math.floor(n));
+      return `<span title="${n.toFixed(1)}">${full}${empty}</span>`;
+    }
+    function coverStyle(type){
+      const g = {
+        violet:['#6a5cff','#9d91ff'], teal:['#1ecad0','#58e7d2'], blue:['#3a65ff','#5b8bff'], green:['#23d18b','#88f2c1'], pink:['#ff79c6','#ffb4de'],
+        orange:['#ff9a44','#ffd166'], amber:['#ffb703','#ffd166'], slate:['#4b5563','#9ca3af'], lime:['#66bb6a','#a8e063'], yellow:['#ffd166','#ffed66'],
+        red:['#ef4444','#f59e0b'], purple:['#a855f7','#c084fc']
+      };
+      const [a,b] = g[type.split(':')[1]] || g.violet;
+      return `background: linear-gradient(135deg, ${a}, ${b});`;
+    }
+
+    function render(){
+      const filtered = GAMES.filter(g=> (filterPlatform==='all' || g.platform.includes(filterPlatform)) && g.name.toLowerCase().includes(searchText));
+      const sorted = filtered.sort((a,b)=>{
+        switch(sortMode){
+          case 'price-asc': return (a.sale??a.price) - (b.sale??b.price);
+          case 'price-desc': return (b.sale??b.price) - (a.sale??a.price);
+          case 'rating-desc': return b.rating - a.rating;
+          default: return a.id - b.id;
+        }
+      });
+      grid.innerHTML = sorted.map(g=>`
+        <article class="card" data-id="${g.id}" data-platform="${g.platform.join(',')}">
+          <div class="thumb" style="${coverStyle(g.cover)}">
+            ${g.tag ? `<span class="label">${g.tag}</span>`:''}
+          </div>
+          <div class="content">
+            <h3 class="title">${g.name}</h3>
+            <div class="meta">
+              <span>${ratingStars(g.rating)}</span>
+              <span>•</span>
+              <span>${platformChips(g.platform)}</span>
+            </div>
+          </div>
+          <div class="price">
+            <div>
+              ${g.sale ? `<strong>${money(g.sale)}</strong><span class="strike">${money(g.price)}</span>` : `<strong>${money(g.price)}</strong>`}
+            </div>
+            <div style="font-size:12px; color:var(--muted)">PIX -5%</div>
+          </div>
+          <div class="add">
+            <div class="qty">
+              <button class="dec">−</button>
+              <input type="text" value="1" inputmode="numeric" pattern="\\d*" />
+              <button class="inc">+</button>
+            </div>
+            <button class="btn primary add-to-cart">Adicionar</button>
+          </div>
+        </article>
+      `).join('');
+
+      // binds
+      $$('.card').forEach(card=>{
+        const input = $('input', card);
+        $('.inc', card).onclick = ()=> input.value = Math.min(99, (+input.value||1)+1);
+        $('.dec', card).onclick = ()=> input.value = Math.max(1, (+input.value||1)-1);
+        $('.add-to-cart', card).onclick = ()=> {
+          const id = +card.dataset.id; const qty = Math.max(1, +input.value||1);
+          addToCart(id, qty);
+        };
+      });
+
+      updateCartUI();
+    }
+
+    function addToCart(id, qty){
+      const item = cart.find(i=>i.id===id);
+      if(item) item.qty += qty; else cart.push({id, qty});
+      save('cart', cart);
+      toast('Adicionado ao carrinho');
+      updateCartUI();
+    }
+    function removeFromCart(id){ cart = cart.filter(i=>i.id!==id); save('cart', cart); updateCartUI(); }
+
+    function updateCartUI(){
+      const detailed = cart.map(i=> ({...i, game: GAMES.find(g=>g.id===i.id)}));
+      const total = detailed.reduce((s,i)=> s + (i.game.sale??i.game.price)*i.qty, 0);
+      cartItemsEl.innerHTML = detailed.length? detailed.map(i=>`
+        <div class="item">
+          <div class="thumb" style="${coverStyle(i.game.cover)}; border-radius:10px"></div>
+          <div>
+            <p class="name">${i.game.name}</p>
+            <p class="muted">${i.qty} × ${money(i.game.sale??i.game.price)}</p>
+          </div>
+          <div style="display:grid; gap:6px; text-align:right">
+            <strong>${money((i.game.sale??i.game.price)*i.qty)}</strong>
+            <button class="remove" onclick="removeFromCart(${i.id})">remover</button>
+          </div>
+        </div>`).join('') : `<p class="muted" style="padding:10px">Seu carrinho está vazio.</p>`;
+      cartCountEl.textContent = cart.reduce((s,i)=>s+i.qty,0);
+      cartTotalEl.textContent = money(total);
+    }
+
+    function openCart(open=true){ cartEl.classList[open?'add':'remove']('open'); cartEl.setAttribute('aria-hidden', (!open).toString()); }
+
+    /* ===== Eventos ===== */
+    $('#btn-cart').onclick = ()=> openCart(true);
+    $('#close-cart').onclick = ()=> openCart(false);
+
+    $('#search').addEventListener('input', (e)=>{ searchText = e.target.value.trim().toLowerCase(); render(); });
+    $$('.chip').forEach(ch=> ch.onclick = ()=>{ $$('.chip').forEach(c=>c.classList.remove('active')); ch.classList.add('active'); filterPlatform = ch.dataset.filter; render(); });
+    $('#sort').onchange = (e)=>{ sortMode = e.target.value; render(); };
+
+    function toast(text){ const t=$('#toast'); t.textContent=text; t.classList.add('show'); setTimeout(()=> t.classList.remove('show'), 1400); }
+
+    function copyCoupon(){ navigator.clipboard.writeText('GAMER10'); toast('Cupom copiado!'); }
+
+    // tema claro/escuro simples invertendo painéis
+    const THEMES = { dark: {bg:'#0f1226', panel:'#171a33', soft:'#23264d', txt:'#e6e7ef'}, light:{bg:'#f7f8ff', panel:'#ffffff', soft:'#e9eaf6', txt:'#14162b'}};
+    let currentTheme = load('theme','dark');
+    function applyTheme(t){
+      const map = THEMES[t];
+      document.documentElement.style.setProperty('--bg', map.bg);
+      document.documentElement.style.setProperty('--panel', map.panel);
+      document.documentElement.style.setProperty('--soft', map.soft);
+      document.documentElement.style.setProperty('--txt', map.txt);
+      save('theme', t); currentTheme=t;
+    }
+    $('#btn-theme').onclick = ()=> applyTheme(currentTheme==='dark'?'light':'dark');
+
+    // init
+    document.getElementById('year').textContent = new Date().getFullYear();
+    applyTheme(currentTheme);
+    render();
+
+    // Acessibilidade rápida (ESC fecha carrinho)
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') openCart(false); });
+
+    // Simula checkout
+    function checkout(){
+      if(!cart.length){ toast('Seu carrinho está vazio'); return; }
+      alert('Obrigado! (Fluxo de checkout não implementado neste demo)');
+    }
+  </script>
+</body>
+</html>

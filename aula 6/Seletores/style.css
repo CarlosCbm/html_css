@@ -1,0 +1,109 @@
+.p { 
+color: blue;
+}
+
+#Título-principal{  
+  
+    background-color: yellow;
+}
+
+.Subtítulos-com-classe {
+    color: greenyellow;
+}
+
+li {
+    color: red;
+}
+
+#cordefundo1 {
+background-color: lightblue;
+}
+
+#cordefundo2{
+background-color: lightcoral;
+}
+
+h2,h3,p {
+color: seagreen;
+}
+
+#centro{    
+    text-align: center;
+}
+
+.youtube{
+    color: red;
+}
+
+.google{    
+    color: blue;
+}
+
+.negrito{
+    font-weight: bold;
+}
+
+img {
+ 
+  border-radius: 10px;     /* Cantos arredondados */
+  width: 200px;            /* Largura */
+  margin: 10px;            /* Espaçamento */
+}
+
+
+
+div p { 
+    color: red;
+}
+
+.p2{
+    color: blueviolet;
+}
+
+#arial {  
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.itálico {
+    font-style: italic;
+}
+
+
+.sublinhado {  
+    text-decoration: underline;
+}
+
+div h3 {
+    color: red;
+    text-decoration: overline;
+}
+
+#vermelho{
+    color: red;
+}
+
+#azul {
+    color: blue;
+}
+
+#verde {
+    color: green;
+}
+
+.span{
+    color: greenyellow;
+    font-weight: bold;
+    font-style: italic;
+}
+
+#fundo {
+    background-color: rebeccapurple;
+    border-radius: 2px solid black; 
+    
+}
+
+h1, p, a{
+    color: darkblue;
+}

@@ -1,0 +1,57 @@
+.tabelaescolar { 
+    text-align: center;
+    background-color: lightblue;
+    border: 2px solid;
+    border-collapse: collapse;
+}
+
+.tabelaescolar td {    
+   padding: 20px;
+   border: 2px solid;
+}
+
+.tabelaescolar th{
+    border: 2px solid;
+    padding: 10px;
+}
+
+.tabelatimes {
+    text-align: center;
+    background-color: rgb(101, 206, 255);
+    border: 2px;
+    border-collapse: collapse;
+}
+
+.tabelatimes th{
+    border: 2px solid black;
+    padding: 10px;
+}
+
+
+.tabelatimes td{
+    border: 2px solid black;
+    padding: 20px;
+}
+.pontos{
+    color: blue;
+    font-weight: bold;
+}
+
+.tabelaprodutos {
+  width: 500px;
+  border-collapse: collapse;
+  border: 3px solid black; /
+}
+
+.tabelaprodutos th, td {
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+img {
+  width: 100px;
+  display: block;
+  margin: 0 auto; 
+}
+

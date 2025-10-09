@@ -3,6 +3,7 @@
     background-color: lightblue;
     border: 2px solid;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 .tabelaescolar td {    
@@ -20,6 +21,7 @@
     background-color: rgb(101, 206, 255);
     border: 2px;
     border-collapse: collapse;
+    margin: auto;
 }
 
 .tabelatimes th{
@@ -40,7 +42,8 @@
 .tabelaprodutos {
   width: 500px;
   border-collapse: collapse;
-  border: 3px solid black; /
+  border: 3px solid black; 
+  margin: auto;
 }
 
 .tabelaprodutos th, td {

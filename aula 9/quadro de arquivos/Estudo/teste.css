@@ -1,0 +1,16 @@
+.tabela1 {
+    background-color: rgb(252, 72, 72);
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.tabela1 th{
+    padding: 10px;
+    border: 2px solid;
+}
+
+.tabela1 td{
+    padding: 10px;
+    border: 2px solid;
+}
+

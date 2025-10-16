@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background-color: #4e73df;
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    font-style: italic;
+}
+
+/* Linha do tempo */
+.timeline {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.event {
+    background-color: white;
+    margin-bottom: 25px;
+    padding: 20px 25px;
+    border-left: 5px solid #4e73df;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.event h2 {
+    margin-top: 0;
+    color: #4e73df;
+}
+
+.event time {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.event p {
+    line-height: 1.6;
+}
+
+/* Rodapé */
+footer {
+    background-color: #4e73df;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+}

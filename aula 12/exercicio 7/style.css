@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color: #4e73df;
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    font-style: italic;
+}
+
+/* Artigo */
+article {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.article-header h2 {
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.article-header .date {
+    font-size: 0.9rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+/* Seções */
+section {
+    margin-bottom: 25px;
+}
+
+section h3 {
+    color: #222;
+    margin-bottom: 8px;
+}
+
+section p {
+    line-height: 1.6;
+}
+
+/* Rodapé */
+footer {
+    background-color: #4e73df;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+}

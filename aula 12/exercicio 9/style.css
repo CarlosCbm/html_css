@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background-color: #4e73df;
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    font-style: italic;
+}
+
+/* FAQ */
+.faq {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+details {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s;
+}
+
+details[open] {
+    background-color: #e0e7ff;
+}
+
+summary {
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+summary::-webkit-details-marker {
+    color: #4e73df;
+    font-size: 1.2em;
+}
+
+details p {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+/* Rodapé */
+footer {
+    background-color: #4e73df;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+}

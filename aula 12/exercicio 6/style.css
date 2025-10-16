@@ -1,0 +1,80 @@
+body {
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color: #4e73df;
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header p {
+    font-style: italic;
+    font-size: 1.2em;
+}
+
+main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* Estilo do aside */
+aside {
+    margin-top: 100px;
+    float: right;
+    width: 250px;
+    margin-left: 20px;
+    padding: 15px;
+    background-color: #ffeb99;
+    border-radius: 8px;
+}
+
+aside h3 {
+    margin-top: 0;
+}
+
+aside ul {
+    padding-left: 20px;
+}
+
+/* Ajuste para parágrafo principal */
+main p {
+    line-height: 1.6;
+}
+
+/* Rodapé */
+footer {
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    background-color: #4e73df;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    aside {
+        float: none;
+        width: 100%;
+        margin: 20px 0 0 0;
+    }
+}

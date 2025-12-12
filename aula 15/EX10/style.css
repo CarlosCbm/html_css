@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.rodape {
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+    color: white;
+    padding: 30px 20px;
+    margin-top: auto;
+}
+
+.secao {
+    flex: 1;
+    padding: 0 20px;
+}
+
+.secao h4 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.secao p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #ccc;
+}
